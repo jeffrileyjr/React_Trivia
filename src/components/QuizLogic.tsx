@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Card } from '@material-ui/core';
 import { FormProps } from '../interfaces/types';
-import styled from 'styled-components';
-import {GlobalStyle, Wrapper} from '../App.styles';
+import {GlobalStyle} from '../App.styles';
+import {Wrapper} from './QuizLogc.styles';
 
 // const CardFormWrapper = styled(Card)`
 // 	display: flex;
@@ -30,15 +30,15 @@ import {GlobalStyle, Wrapper} from '../App.styles';
 
 const QuestionForm: React.FC<FormProps> = ({ start }) => {
 	const [inputNum, setInputNum] = useState('10');
-	const [difficulty, setDifficulty] = useState('');
+	const [difficulty, setDifficulty] = useState('easy');
 
 	return (
 		<>
 		<GlobalStyle />
 		<Wrapper>
 			<h1>Trivia Game</h1>
-			<div>
-				<TextField
+			<div >
+				<TextField className="numQuestions"
 					id='outlined-number'
 					label='Number of Questions'
 					type='number'
@@ -55,27 +55,30 @@ const QuestionForm: React.FC<FormProps> = ({ start }) => {
 					variant='outlined'
 					onChange={(event) => setInputNum(event.target.value)}
 				/>
-				<FormHelperText>Minimum: 5 and Maximum: 50</FormHelperText>
+				<FormHelperText className="helpText">Minimum: 5 and Maximum: 50</FormHelperText>
 			</div>
 			<div>
-				<InputLabel id='difficulty-label'>Difficulty</InputLabel>
+				<InputLabel id='difficulty-label' className="difficultyChoice">Select Difficulty:</InputLabel>
 				<Select
+					className="diffChoice"
 					labelId='difficulty-label'
 					id='difficulty-select'
 					onChange={(event: React.ChangeEvent<{ value: unknown }>) => setDifficulty(event.target.value as string)}
 					value={difficulty}
 					
 				>
-					<MenuItem value={''}>Any</MenuItem>
-					<MenuItem value={'easy'}>Easy</MenuItem>
+					<MenuItem value={''} >Any</MenuItem>
+					<MenuItem value={'easy'} selected>Easy</MenuItem>
 					<MenuItem value={'medium'}>Medium</MenuItem>
 					<MenuItem value={'hard'}>Hard</MenuItem>
 				</Select>
-				<FormHelperText>Select a Quiz difficulty</FormHelperText>
+				{/* <FormHelperText>Select a Quiz difficulty</FormHelperText> */}
 			</div>
+
 			<button className="next" onClick={() => start(inputNum, difficulty)} >
 				Start Game
 			</button>
+
 		</Wrapper>
 		</>
 	);
