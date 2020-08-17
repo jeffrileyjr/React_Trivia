@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
     padding: 20px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
     text-align: center;
+    margin-top: 2%;
 
     .cat_diff {
         font-size: 0.8rem;

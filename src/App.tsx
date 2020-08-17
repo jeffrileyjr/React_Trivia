@@ -23,6 +23,7 @@ const App: React.FC = () => {
   const [number, setNumber] = useState(0);
   const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
+  const [potentialScore, setPotential] = useState(0);
   const [gameOver, setGameOver] = useState(true);
   const [totalQuestions, setTotalQuestions] = useState(0);
 
@@ -51,15 +52,25 @@ const App: React.FC = () => {
     )
     console.log(difficulty);
 
+
+
+    
     setQuestions(newQuestions);
     setScore(0);
+    setPotential(0);
     setUserAnswers([]);
     setNumber(0);
     setLoading(false);
+    
+
   };
+
 
   // used to checks the users answer
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (potentialScore === 0) {
+      setPotentialScore();
+    } 
     if (!gameOver) {
       //Users answer from questioncard button value
       const answer = e.currentTarget.value;
@@ -89,8 +100,23 @@ const App: React.FC = () => {
       console.log(`the total questions are ${totalQuestions} and you answers ${userAnswers.length}`)
     }
   };
+  const setPotentialScore = () => {
+    let i = 0;
+    for (i = 0; i < totalQuestions; i++) {
+      if (questions[i].difficulty === 'easy') {
+        setPotential((prev) => prev + 1);
+      } else if (questions[i].difficulty === 'medium') {
+        setPotential((prev) => prev + 2);
+      } else {
+        setPotential((prev) => prev + 3);
+      }
+  }
+};
+
+
 
   const nextQuestion = () => {
+
     // move to next question if not the last question
     const nextQuestion = number + 1;
 //below is checking if next question is 10 set game over, otherwise show that next quest
@@ -108,8 +134,9 @@ const App: React.FC = () => {
     <>
     <GlobalStyle />
 		<Wrapper>
-			{gameOver || userAnswers.length === totalQuestions ? (<QuestionForm start={startTrivia} /> ) : null}
-      {!gameOver ? <p className="score">Score: {score}</p> : null }
+    {!gameOver ? <p className="score">Score: {score} | Max Score: {potentialScore}</p> : null }
+			{gameOver || userAnswers.length === totalQuestions ? (<QuestionForm start={startTrivia}  /> ) : null}
+      
      {loading ? <p>Loading Question...</p> : null }
      {!gameOver && !loading ? (
      <QuestionCard 
