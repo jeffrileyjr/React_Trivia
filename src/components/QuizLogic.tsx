@@ -72,7 +72,10 @@ const QuestionForm: React.FC<FormProps> = ({ start }) => {
 					<MenuItem value={'medium'}>Medium</MenuItem>
 					<MenuItem value={'hard'}>Hard</MenuItem>
 				</Select>
-				{/* <FormHelperText>Select a Quiz difficulty</FormHelperText> */}
+				<FormHelperText>Question Point Values: </FormHelperText>
+				<FormHelperText>Easy:1 Med:2 Hard:3</FormHelperText>
+				{/* <FormHelperText>Medium:2 points each</FormHelperText>
+				<FormHelperText>Hard:3 points each</FormHelperText> */}
 			</div>
 
 			<button className="next" onClick={() => start(inputNum, difficulty)} >
